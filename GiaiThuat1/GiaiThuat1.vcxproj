@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="BFS.cpp" />
     <ClCompile Include="BLG.cpp" />
+    <ClCompile Include="DP.cpp" />
     <ClCompile Include="Good Node-subsets.cpp" />
     <ClCompile Include="Hiking.cpp" />
     <ClCompile Include="Main.cpp" />

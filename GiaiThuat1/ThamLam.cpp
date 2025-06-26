@@ -1,28 +1,12 @@
 #include<iostream>  
+#include<vector>
+#include<algorithm>
+#include<functional>
 #include"Function.h"  
 using namespace std;  
-const int NMax = 200000;  
+
 vector<int> neg;  
 vector<int> pos;  
-
-void Quicksort_decre(vector<int>& arr, int l, int r) {  
-   if (l > r) return;  
-   int center = arr[(l + r) / 2];  
-   int i = l, j = r;  
-   while (i <= j) {  
-       while (arr[i] > center) i++;  
-       while (arr[j] < center) j--;  
-       if (i <= j) {  
-           int swap = arr[i];  
-           arr[i] = arr[j];  
-           arr[j] = swap;  
-           i++;  
-           j--;  
-       }  
-   }  
-   if (l < j) Quicksort_decre(arr, l, j);  
-   if (i < r) Quicksort_decre(arr, i, r);  
-}  
 
 void Greedy() {  
    int t;  
@@ -42,8 +26,8 @@ void Greedy() {
                neg.push_back(-x);  
            }  
        }  
-       Quicksort_decre(pos, 0, pos.size() - 1);  
-       Quicksort_decre(neg, 0, neg.size() - 1);  
+       sort(pos.begin(), pos.end(), greater<int>());
+       sort(neg.begin(), neg.end(),greater<int>());
 
        int ans = 0;  
        for (int i = 0; i < pos.size(); i += k) {  
@@ -55,4 +39,23 @@ void Greedy() {
 
        cout << ans << endl;  
    }  
+}
+
+void greedy2() {
+    int t;
+    vector<int>adj[MAX];
+    cin >> t;
+    while (t--) {
+        int n;
+        cin >> n;
+        int k;
+        cin >> k;
+        int x, y;
+        for (int i = 0;i < n;i++) {
+            cin >> x >> y;
+            adj[x].push_back(y);
+            adj[y].push_back(x);
+        }
+
+    }
 }

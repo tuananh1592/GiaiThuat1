@@ -1,0 +1,25 @@
+// Fake <bits/stdc++.h> for MSVC (Visual Studio)
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+#include <set>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <queue>
+#include <stack>
+#include <deque>
+#include <string>
+#include <sstream>
+#include <bitset>
+#include <limits>
+#include <numeric>
+#include <functional>
+#include <cassert>
+#include <cstring>
+#include <climits>
+#include <cstdlib>
+#include <ctime>
+#include <fstream>
+#include <iomanip>

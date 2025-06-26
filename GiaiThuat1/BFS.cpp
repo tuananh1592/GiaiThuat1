@@ -106,3 +106,25 @@ void init1() {
 	}
 
 }
+vector<int>adj3[1001];
+bool visited[1001];
+
+void inp() {
+	int n, m;
+	cin >> n >> m;
+	for (int i = 0;i < m;i++) {
+		int x, y; cin >> x >> y;
+		adj3[x].push_back(y);
+		adj3[y].push_back(x);
+	}
+	memset(visited, false, sizeof(visited));//cho tat ca gia tri trong mang vited la false
+}
+void dfs3(int u) {
+	cout << u << " ";
+	visited[u] = true;
+	for (int v : adj3[u]) {
+		if (!visited[v]) {
+			dfs3(v);
+		}
+	}
+}
