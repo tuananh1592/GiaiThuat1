@@ -11,7 +11,7 @@
 #include<algorithm>
 #include"Function.h"
 using namespace std;
-
+using ll = long long;
 // Define MAX to avoid undeclared identifier error
 
 #ifdef __cplusplus
@@ -37,6 +37,7 @@ void init_goodnode3();
 void StringReversal();
 void StringSort();
 void Toprace();
+vector<ll> timUoc(ll n);
 #ifdef __cplusplus
 #endif
 

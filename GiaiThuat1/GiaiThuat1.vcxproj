@@ -129,11 +129,14 @@
   <ItemGroup>
     <ClCompile Include="BFS.cpp" />
     <ClCompile Include="BLG.cpp" />
+    <ClCompile Include="Cards.cpp" />
     <ClCompile Include="DP.cpp" />
     <ClCompile Include="Good Node-subsets.cpp" />
     <ClCompile Include="Hiking.cpp" />
+    <ClCompile Include="Luoi2DNhanRong.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="queue.cpp" />
+    <ClCompile Include="Sording.cpp" />
     <ClCompile Include="String Reversal.cpp" />
     <ClCompile Include="ThamLam.cpp" />
     <ClCompile Include="Toy Race.cpp" />
