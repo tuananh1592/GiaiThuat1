@@ -159,3 +159,78 @@ void Knapsack() {
 		cout << kDP[i] <<" dinh: " << ans <<endl; // chu y dau ngoac va k==n 
 	}
 }
+
+void DP_TimtapConTrongMang() {
+	int n, target;
+	cin >> n;
+	vector<int> a(n);
+	for (int i = 0; i < n; i++) {
+		cin >> a[i];
+	}
+	cin >> target;
+
+	// dp[s] = true nếu có tập con đạt tổng s
+	vector<char> dp(target + 1, 0);
+	// parent[s] = chỉ số i trong a[] dùng để bật dp[s] lần đầu
+	vector<int> parent(target + 1, -1);
+
+	dp[0] = 1;  // tập rỗng cho tổng 0
+
+	for (int i = 0; i < n; i++) {
+		int x = a[i];
+		// lùi s từ target xuống x để mỗi a[i] dùng đúng 1 lần
+		for (int s = target; s >= x; s--) {
+			// nếu chưa từng bật dp[s] và dp[s-x] đang bật
+			if (!dp[s] && dp[s - x]) {
+				dp[s] = 1;
+				parent[s] = i;  // lưu rằng để có được s ta dùng a[i]
+			}
+		}
+	}
+
+	if (!dp[target]) {
+		cout << "false\n";
+	}
+
+	// Ngược dấu parent để lấy ra các phần tử
+	vector<int> subset;
+	int s = target;
+	while (s > 0) {
+		int i = parent[s];
+		subset.push_back(a[i]);
+		s -= a[i];
+	}
+	// subset chứa các phần tử, có thể đảo lại nếu muốn tăng dần thứ tự
+	reverse(subset.begin(), subset.end());
+
+	// In kết quả
+	cout << "true\n";
+	cout << "Subset of sum " << target << ": ";
+	for (int v : subset) {
+		cout << v << " ";
+	}
+	cout << "\n";
+}
+
+void DpKtraXemCoTapConKo() {
+	int n, target;
+	cin >> n;
+	vector<int> a(n);
+	for (int i = 0; i < n; i++) {
+		cin >> a[i];
+	}
+	cin >> target;
+
+	// dp[j] = có thể hay không có tập con đạt tổng j
+	vector<char> dp(target + 1, 0);
+	dp[0] = 1;
+
+	for (int x : a) {
+		// duyệt ngược để mỗi phần tử chỉ dùng 1 lần
+		for (int s = target; s >= x; s--) {
+			if (dp[s - x]) dp[s] = 1;
+		}
+	}
+
+	cout << (dp[target] ? "true" : "false");
+}

@@ -16,7 +16,7 @@ int n;
 vector<string> board;           // board[r][c]
 vector<int> layer;              // layer[u] = lớp của ô u
 vector<vector<int>> adj;        // adj[u] = danh sách ô kề u
-vector<bool> visited;
+vector<bool> visited1;
 string cur;
 string best_min, best_max;
 
@@ -27,7 +27,7 @@ inline bool inside(int r, int c) {
 
 // u = id ô hiện tại, par = ô trước đó (flattened index), depth = độ sâu (số ô đã chọn)
 void dfs(int u, int par, int depth) {
-    visited[u] = true;
+    visited1[u] = true;
     cur.push_back(board[u / n][u % n]);
 
     if (depth == n * n) {
@@ -39,7 +39,7 @@ void dfs(int u, int par, int depth) {
         // thu thập các ô kề chưa visited
         vector<int> cand;
         for (int v : adj[u]) {
-            if (v != par && !visited[v])
+            if (v != par && !visited1[v])
                 cand.push_back(v);
         }
         // tìm layer lớn nhất trong các ứng viên
@@ -62,10 +62,10 @@ void dfs(int u, int par, int depth) {
 
     // backtrack
     cur.pop_back();
-    visited[u] = false;
+    visited1[u] = false;
 }
 
-int main() {
+void Luoi2DnhanRong() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
@@ -80,7 +80,7 @@ int main() {
         int N = n * n;
         layer.assign(N, 0);
         adj.assign(N, {});
-        visited.assign(N, false);
+        visited1.assign(N, false);
 
         // 1) Tính layer[u]
         for (int r = 0; r < n; r++) {
@@ -118,5 +118,4 @@ int main() {
         // 4) In kết quả: max trước, rồi min
         cout << best_max << ' ' << best_min << "\n";
     }
-    return 0;
 }

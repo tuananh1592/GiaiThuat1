@@ -107,7 +107,7 @@ void init1() {
 
 }
 vector<int>adj3[1001];
-bool visited[1001];
+bool visite[1001];
 
 void inp() {
 	int n, m;
@@ -117,14 +117,128 @@ void inp() {
 		adj3[x].push_back(y);
 		adj3[y].push_back(x);
 	}
-	memset(visited, false, sizeof(visited));//cho tat ca gia tri trong mang vited la false
+	memset(visite, false, sizeof(visite));//cho tat ca gia tri trong mang vited la false
 }
 void dfs3(int u) {
 	cout << u << " ";
-	visited[u] = true;
+	visite[u] = true;
 	for (int v : adj3[u]) {
-		if (!visited[v]) {
+		if (!visite[v]) {
 			dfs3(v);
 		}
 	}
 }
+
+
+static void BFSCyc(int u, vector<int> edges[MAX]) { // dang bai dinh canh  
+   // KhoiTao  
+   queue<int> q;  
+   q.push(u);  
+   visite[u] = true;  
+   while (!q.empty()) {  
+       int v = q.front(); // lay o dau hang doi  
+       q.pop();  
+       cout << v << " ";  
+       for (int x : edges[v]) { // Corrected 'edges[u]' to 'edges[v]'  
+           if (!visite[x]) {  
+               q.push(x);  
+               visite[x] = true; // Corrected 'visited[u]' to 'visited[x]'  
+           }  
+       }  
+   }  
+}
+
+vector<bool> visited;
+extern vector<vector<int>> adj;
+// để lưu parent phục vụ reconstruct path khi phát hiện cycle
+vector<int> parent;
+
+// --- BFS in thứ tự từ 0 ---
+void printBFS(int start) {
+	queue<int> q;
+	vector<bool> seen(adj.size(), false);
+	q.push(start);
+	seen[start] = true;
+
+	while (!q.empty()) {
+		int u = q.front(); q.pop();
+		cout << u << " ";
+		for (int v : adj[u]) {
+			if (!seen[v]) {
+				seen[v] = true;
+				q.push(v);
+			}
+		}
+	}
+	cout << "\n";
+}
+// --- DFS phát hiện cycle và reconstruct path ---
+bool dfsCycle(int u, vector<bool>& inStack, int& cycle_start, int& cycle_end) {
+	visited[u] = true;
+	inStack[u] = true;
+
+	for (int v : adj[u]) {
+		if (!visited[v]) {
+			parent[v] = u;
+			if (dfsCycle(v, inStack, cycle_start, cycle_end) == true)
+				return true;
+		}
+		else if (inStack[v] == true) {
+			// gặp back-edge u->v, tìm được cycle
+			cycle_end = u;
+			cycle_start = v;
+			return true;
+		}
+	}
+
+	inStack[u] = false;
+	return false;
+}
+
+void findAndPrintCycle() {
+	int n = adj.size();
+	visited.assign(n, false);
+	parent.assign(n, -1);
+	vector<bool> inStack(n, false);
+
+	int cycle_start = -1, cycle_end = -1;
+	// chạy DFS trên tất cả các thành phần liên thông (đồ thị có hướng)
+	for (int i = 0; i < n; i++) {
+		if (!visited[i] && dfsCycle(i, inStack, cycle_start, cycle_end) == true)
+			cout << "true\n";
+			break;
+	}
+
+	if (cycle_start == -1) {
+		cout << "false\n";
+		return;
+	}
+
+	// reconstruct đường cycle từ cycle_end ngược lên cycle_start va in ra
+	/*vector<int> cycle;
+	cycle.push_back(cycle_start);
+	for (int v = cycle_end; v != cycle_start; v = parent[v]) {
+		cycle.push_back(v);
+	}
+	cycle.push_back(cycle_start);  // đóng vòng
+
+	// in đường đi
+	for (int x : cycle) {
+		cout << x << " ";
+	}
+	cout << "\n";*/
+}
+void isCyclic() {  
+int V;  
+cin >> V;  
+adj.assign(V, {});
+int u, v;  
+for (int i = 0; i < V; i++) {  
+	cin >> u >> v;  
+	adj[u].push_back(v);  
+	// edges[v].push_back(u);  
+}  
+printBFS(0);
+findAndPrintCycle();
+}  
+

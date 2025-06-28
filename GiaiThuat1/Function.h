@@ -38,6 +38,7 @@ void StringReversal();
 void StringSort();
 void Toprace();
 vector<ll> timUoc(ll n);
+void isCyclic();
 #ifdef __cplusplus
 #endif
 
